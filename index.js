@@ -46,7 +46,6 @@ const run = async () => {
     });
     app.patch("/user", async (req, res) => {
       const id = req.query.id;
-      console.log(id);
       const updateInfo = req.body;
       const query = { _id: ObjectId(id) };
       const updateDoc = {
@@ -58,7 +57,6 @@ const run = async () => {
         },
       };
       const result = await usersCollection.updateOne(query, updateDoc);
-      console.log(result);
       res.send(result);
     });
 
@@ -88,8 +86,6 @@ const run = async () => {
     //likes
     app.patch("/likes", async (req, res) => {
       const id = req.query.id;
-      console.log(id);
-      console.log(req.body);
       const query = { _id: ObjectId(id) };
       const updateDoc = {
         $set: {
@@ -107,14 +103,12 @@ const run = async () => {
       const id = req.query.id;
       const query = { _id: ObjectId(id) };
       const post = await postsCollection.findOne(query);
-      console.log(post);
       const commentId = new ObjectId();
       const comment = req.body;
       comment.commentId = commentId;
 
       const previousComment = post.comments;
       const currentComment = [...previousComment, comment];
-      console.log(currentComment);
       const updateDoc = {
         $set: { comments: currentComment },
       };
